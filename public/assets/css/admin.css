@@ -1,0 +1,279 @@
+/* =============================================================
+   public/assets/css/admin.css
+   CI4 Universal Boilerplate — Admin Panel Styles
+   Stack: Bootstrap 5.3 + Bootstrap Icons + DM Sans
+============================================================= */
+
+/* ── CSS Variables ────────────────────────────────────────── */
+:root {
+    --sidebar-width:        250px;
+    --sidebar-collapsed:    70px;
+    --topbar-height:        58px;
+
+    --sidebar-bg:           #16213e;
+    --sidebar-link-hover:   rgba(255,255,255,.08);
+    --sidebar-link-active:  rgba(99,179,237,.18);
+    --sidebar-active-bar:   #63b3ed;
+    --sidebar-text:         rgba(255,255,255,.82);
+    --sidebar-muted:        rgba(255,255,255,.45);
+
+    --topbar-bg:            #ffffff;
+    --card-shadow:          0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+    --card-radius:          .75rem;
+    --transition:           .2s ease;
+}
+
+[data-bs-theme="dark"] {
+    --topbar-bg:    #1e2636;
+    --card-shadow:  0 1px 3px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.2);
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    background: var(--bs-body-bg);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────── */
+.sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    z-index: 1040;
+    transition: width var(--transition), transform var(--transition);
+    overflow: hidden;
+}
+
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed);
+}
+
+.sidebar.collapsed .sidebar-brand-name,
+.sidebar.collapsed .sidebar-link span,
+.sidebar.collapsed .sidebar-arrow,
+.sidebar.collapsed .sidebar-footer > div,
+.sidebar.collapsed .sidebar-footer a[title="Logout"] { opacity: 0; pointer-events: none; }
+
+.sidebar-brand {
+    color: #fff;
+    min-height: var(--topbar-height);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.sidebar-brand-icon { font-size: 1.4rem; color: var(--sidebar-active-bar); }
+.sidebar-brand-name { font-size: .95rem; letter-spacing: -.01em; }
+
+/* Links */
+.sidebar-link {
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-size: .875rem;
+    transition: background var(--transition), color var(--transition);
+    cursor: pointer;
+    white-space: nowrap;
+}
+.sidebar-link:hover  { background: var(--sidebar-link-hover);  color: #fff; }
+.sidebar-link.active {
+    background: var(--sidebar-link-active);
+    color: #fff;
+    position: relative;
+}
+.sidebar-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px; bottom: 4px;
+    width: 3px;
+    background: var(--sidebar-active-bar);
+    border-radius: 0 4px 4px 0;
+}
+
+.sidebar-link--sub { font-size: .82rem; }
+
+.sidebar-arrow { transition: transform var(--transition); font-size: .75rem; }
+.sidebar-link:not(.collapsed) .sidebar-arrow { transform: rotate(90deg); }
+
+/* Sub-menu */
+.sidebar-sub .sidebar-link--sub { padding-left: 2.5rem !important; }
+
+/* Footer */
+.sidebar-footer { background: rgba(0,0,0,.15); }
+.avatar-placeholder {
+    width: 36px; height: 36px;
+    background: var(--sidebar-active-bar);
+    color: var(--sidebar-bg);
+    font-size: .85rem; font-weight: 700;
+}
+
+/* ── Main Wrapper ─────────────────────────────────────────── */
+.main-wrapper {
+    margin-left: var(--sidebar-width);
+    transition: margin-left var(--transition);
+    width: calc(100% - var(--sidebar-width));
+}
+
+.sidebar.collapsed ~ .main-wrapper {
+    margin-left: var(--sidebar-collapsed);
+    width: calc(100% - var(--sidebar-collapsed));
+}
+
+/* ── Topbar ───────────────────────────────────────────────── */
+.topbar {
+    height: var(--topbar-height);
+    background: var(--topbar-bg);
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+
+/* ── Cards ────────────────────────────────────────────────── */
+.card {
+    border: none;
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+}
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: 1rem 1.25rem .75rem;
+    font-weight: 600;
+    font-size: .9rem;
+}
+
+/* ── Stat Cards ───────────────────────────────────────────── */
+.stat-card {
+    border-radius: var(--card-radius);
+    padding: 1.25rem;
+    box-shadow: var(--card-shadow);
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    overflow: hidden;
+    position: relative;
+}
+.stat-card::after {
+    content: '';
+    position: absolute;
+    right: -12px; top: -12px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.08);
+}
+.stat-card-icon {
+    width: 52px; height: 52px;
+    border-radius: .6rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+.stat-card-value  { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+.stat-card-label  { font-size: .78rem; opacity: .85; margin-top: .2rem; }
+.stat-card-badge  { font-size: .72rem; }
+
+/* ── Tables ───────────────────────────────────────────────── */
+.table-card { border-radius: var(--card-radius); overflow: hidden; }
+.table thead th {
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--bs-secondary-color);
+    background: var(--bs-tertiary-bg);
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: .75rem 1rem;
+    white-space: nowrap;
+}
+.table tbody td { padding: .7rem 1rem; vertical-align: middle; }
+.table tbody tr { transition: background var(--transition); }
+.table tbody tr:hover { background: var(--bs-tertiary-bg); }
+
+/* Action buttons in tables */
+.btn-action {
+    padding: .2rem .5rem;
+    font-size: .78rem;
+    border-radius: .4rem;
+    transition: all .15s;
+}
+
+/* ── Forms ────────────────────────────────────────────────── */
+.form-label { font-weight: 500; font-size: .85rem; }
+.form-control, .form-select {
+    border-radius: .5rem;
+    font-size: .875rem;
+    border-color: var(--bs-border-color);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.form-control:focus, .form-select:focus {
+    border-color: #63b3ed;
+    box-shadow: 0 0 0 .2rem rgba(99,179,237,.2);
+}
+
+/* ── Badges ───────────────────────────────────────────────── */
+.badge { font-weight: 500; letter-spacing: .03em; }
+
+/* ── Alerts ───────────────────────────────────────────────── */
+.alert { border: none; border-radius: .6rem; font-size: .875rem; }
+
+/* ── Pagination ───────────────────────────────────────────── */
+.pagination .page-link {
+    border-radius: .4rem !important;
+    margin: 0 2px;
+    font-size: .82rem;
+    color: var(--bs-body-color);
+    border-color: var(--bs-border-color);
+}
+.pagination .page-item.active .page-link {
+    background: #16213e;
+    border-color: #16213e;
+}
+
+/* ── Notification Dropdown ────────────────────────────────── */
+.notification-item {
+    padding: .65rem 1rem;
+    border-bottom: 1px solid var(--bs-border-color);
+    font-size: .82rem;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+.notification-item:hover { background: var(--bs-tertiary-bg); }
+.notification-item.unread { background: rgba(99,179,237,.06); }
+.notification-item .notif-title { font-weight: 600; }
+
+/* ── Mobile ───────────────────────────────────────────────── */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 1039;
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-width) !important;
+    }
+    .sidebar.show { transform: translateX(0); }
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    .sidebar-overlay.show { display: block; }
+}
+
+/* ── Utility ──────────────────────────────────────────────── */
+.font-mono { font-family: 'DM Mono', monospace; }
+.cursor-pointer { cursor: pointer; }
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
